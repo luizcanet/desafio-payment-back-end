@@ -20,7 +20,7 @@ class Payer
 
     #[ORM\OneToOne(targetEntity: PayerIdentification::class)]
     #[ORM\JoinColumn(name: 'identification_id', referencedColumnName: 'id')]
-    public ?PayerIdentification $identification = null;
+    public PayerIdentification $identification;
 
     public function getId(): ?int
     {

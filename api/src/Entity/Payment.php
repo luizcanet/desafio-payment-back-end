@@ -2,10 +2,23 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(),
+        new GetCollection(),
+        new Post(),
+        new Patch(),
+        new Delete()
+    ]
+)]
 class Payment
 {
     #[ORM\Id]
@@ -28,7 +41,7 @@ class Payment
 
     #[OneToOne(targetEntity: Payer::class)]
     #[JoinColumn(name: 'payer_id', referencedColumnName: 'id')]
-    public ?Payer $payer = null;
+    public Payer $payer;
 
     #[ORM\Column]
     public string $notification_url = '';
