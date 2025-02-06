@@ -14,4 +14,9 @@ class PayerIdentification
 
     #[ORM\Column]
     public string $number = '';
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 }
