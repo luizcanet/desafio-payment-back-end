@@ -18,11 +18,13 @@ class Payer
     public string $type = 'customer';
 
     #[Groups(['PostRequest'])]
+    #[Assert\NotBlank]
     #[Assert\Email]
     #[ORM\Column]
     public string $email = '';
 
     #[Groups(['PostRequest'])]
+    #[Assert\Valid]
     #[ORM\OneToOne(targetEntity: PayerIdentification::class, cascade: ['persist'])]
     #[ORM\JoinColumn(name: 'identification_id', referencedColumnName: 'id', nullable: false)]
     public PayerIdentification $identification;

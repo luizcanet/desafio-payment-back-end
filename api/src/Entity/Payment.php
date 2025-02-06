@@ -8,6 +8,8 @@ use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\Context;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Doctrine\ORM\Mapping as ORM;
 use App\State\PaymentPostProcessor;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -55,6 +57,7 @@ class Payment
     public string $payment_method_id = '';
 
     #[Groups(['PostRequest'])]
+    #[Assert\Valid]
     #[ORM\OneToOne(targetEntity: Payer::class, cascade: ['persist'])]
     #[ORM\JoinColumn(name: 'payer_id', referencedColumnName: 'id', nullable: false)]
     public Payer $payer;
@@ -63,6 +66,7 @@ class Payment
     public string $notification_url = 'https://webhook.site/dd00c411-14b5-4110-a25b-177836964162';
 
     #[Groups(['PostResponse'])]
+    #[Context([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
     #[ORM\Column(type: "date_immutable")]
     public ?\DateTimeImmutable $created_at = null;
 
