@@ -3,6 +3,7 @@ namespace App\Entity;
 
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 class Payer
@@ -16,12 +17,13 @@ class Payer
     #[ORM\Column]
     public string $type = 'customer';
 
-    #[Groups(['postWrite'])]
+    #[Groups(['PostRequest'])]
+    #[Assert\Email]
     #[ORM\Column]
     public string $email = '';
 
-    #[Groups(['postWrite'])]
-    #[ORM\OneToOne(targetEntity: PayerIdentification::class)]
-    #[ORM\JoinColumn(name: 'identification_id', referencedColumnName: 'id')]
+    #[Groups(['PostRequest'])]
+    #[ORM\OneToOne(targetEntity: PayerIdentification::class, cascade: ['persist'])]
+    #[ORM\JoinColumn(name: 'identification_id', referencedColumnName: 'id', nullable: false)]
     public PayerIdentification $identification;
 }
