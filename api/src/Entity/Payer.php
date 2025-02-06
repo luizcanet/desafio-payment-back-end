@@ -18,8 +18,8 @@ class Payer
     #[ORM\Column]
     public string $email = '';
 
-    #[OneToOne(targetEntity: PayerIdentification::class)]
-    #[JoinColumn(name: 'identification_id', referencedColumnName: 'id')]
+    #[ORM\OneToOne(targetEntity: PayerIdentification::class)]
+    #[ORM\JoinColumn(name: 'identification_id', referencedColumnName: 'id')]
     public ?PayerIdentification $identification = null;
 
     public function getId(): ?int
