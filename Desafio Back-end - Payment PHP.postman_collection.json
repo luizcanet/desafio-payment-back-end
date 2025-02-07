@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "1a9848b2-23f1-417e-89ac-e430a79903bd",
+		"name": "Desafio Back-end - Payment PHP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "16085532"
+	},
+	"item": [
+		{
+			"name": "Criar pagamento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"transaction_amount\": 245.90,\r\n    \"installments\": 3,\r\n    \"token\": \"ae4e50b2a8f3h6d9f2c3a4b5d6e7f8g9\",\r\n    \"payment_method_id\": \"master\",\r\n    \"payer\": {\r\n        \"email\": \"example_random@gmail.com\",\r\n        \"identification\": {\r\n            \"type\": \"CPF\",\r\n            \"number\": \"12345678909\"\r\n        }\r\n     }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost/rest/payments"
+			},
+			"response": []
+		},
+		{
+			"name": "Lista de pagamentos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://localhost/rest/payments"
+			},
+			"response": []
+		},
+		{
+			"name": "Ver detalhes de um Pagamento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://localhost/rest/payments/0194dcfa-a3fd-7bbd-a20f-d64c1570b55d"
+			},
+			"response": []
+		},
+		{
+			"name": "Confirmar um pagamento",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\":\"PAID\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost/rest/payments/0194dcfa-a3fd-7bbd-a20f-d64c1570b55d"
+			},
+			"response": []
+		},
+		{
+			"name": "Cancelar um pagamento",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "https://localhost/rest/payments/0194dcfa-a3fd-7bbd-a20f-d64c1570b55"
+			},
+			"response": []
+		}
+	]
+}
