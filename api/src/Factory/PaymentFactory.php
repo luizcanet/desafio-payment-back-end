@@ -39,7 +39,7 @@ final class PaymentFactory extends PersistentProxyObjectFactory
             'payment_method_id' => self::faker()->creditCardType(),
             'status' => self::faker()->randomElement(['PENDING', 'PAID', 'CANCELED']),
             'token' => self::faker()->md5(),
-            'transaction_amount' => self::faker()->randomFloat(2),
+            'transaction_amount' => self::faker()->randomFloat(2, 1),
             'updated_at' => self::faker()->dateTime(),
         ];
     }

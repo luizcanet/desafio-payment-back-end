@@ -7,6 +7,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\ApiProperty;
 use App\State\PaymentDeleteProcessor;
 use App\State\PaymentPatchProcessor;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -14,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Context;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\ConversionException;
+use Doctrine\DBAL\Exception\NotNullConstraintViolationException;
 use App\State\PaymentPostProcessor;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -23,6 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[GetCollection]
 #[Post(
     processor: PaymentPostProcessor::class,
+    exceptionToStatus: [NotNullConstraintViolationException::class => 400],
     normalizationContext: ['groups' => ['PostResponse']],
     denormalizationContext: ['groups' => ['PostRequest']]
 )]
@@ -76,10 +79,22 @@ class Payment
 
     #[Groups(['PostResponse'])]
     #[Context([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'string',
+            'format' => 'date',
+        ]
+    )]
     #[ORM\Column(type: "date_immutable")]
     public ?\DateTimeImmutable $created_at = null;
 
     #[Context([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
+    #[ApiProperty(
+        openapiContext: [
+            'type' => 'string',
+            'format' => 'date',
+        ]
+    )]
     #[ORM\Column(type: "date")]
     public ?\DateTime $updated_at = null;
 
